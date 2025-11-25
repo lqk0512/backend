@@ -14,9 +14,8 @@ Mặc định server chạy tại:
 http://localhost:3000
 
 4. Chạy script test API
+   
 chmod +x test-api.sh
-
 ./test-api.sh   
 chmod +x test.sh
-
 ./test.sh     
