@@ -1,0 +1,26 @@
+[
+  {
+    "booking_id": 2,
+    "student_id": 3,
+    "tutor_id": 2,
+    "slot_id": 1
+  },
+  {
+    "booking_id": 3,
+    "student_id": 3,
+    "tutor_id": 2,
+    "slot_id": 3
+  },
+  {
+    "booking_id": 4,
+    "student_id": 3,
+    "tutor_id": 2,
+    "slot_id": 4
+  },
+  {
+    "booking_id": 6,
+    "student_id": 3,
+    "tutor_id": 2,
+    "slot_id": 6
+  }
+]
