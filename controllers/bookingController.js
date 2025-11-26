@@ -1,4 +1,4 @@
-const { bookings, availabilities, tutors, bookingFile, availabilityFile, writeJSON } = require('../data/database');
+const { bookings, students , availabilities, tutors, bookingFile, availabilityFile, writeJSON } = require('../data/database');
 const fs = require('fs');
 
 exports.createBooking = (req, res) => {
@@ -121,4 +121,57 @@ exports.rescheduleBooking = (req, res) => {
   writeJSON(bookingFile, bookings);
 
   res.json({ message: 'Booking đã được đổi slot', booking });
+};
+
+exports.aiRecommendTutors = (req, res) => {
+  const student_id = parseInt(req.params.student_id);
+
+  const student = students.find(s => s.student_id === student_id);
+  if (!student) {
+    return res.status(404).json({ message: 'Student không tồn tại' });
+  }
+
+  const needs = (student.listNeeds || []).map(n => n.toLowerCase());
+  
+  const suggestions = tutors.map(tutor => {
+    const expertise = (tutor.listExpertise || []).map(e => e.toLowerCase());
+
+    // 1) Skill match
+    const skillMatched = needs.filter(n => expertise.includes(n));
+    const skillScore = skillMatched.length * 3;
+
+    // 2) Faculty match (ưu tiên mạnh)
+    const facultyScore =
+      student.faculty &&
+      tutor.faculty &&
+      student.faculty.toLowerCase() === tutor.faculty.toLowerCase()
+        ? 2
+        : 0;
+
+    // 3) Năm học (ưu tiên nhẹ)
+    const yearScore =
+      tutor.minYear && student.yearOfStudy >= tutor.minYear ? 1 : 0;
+
+    // 4) Availability match (slot trống)
+    const tutorSlots = availabilities.filter(
+      s => s.tutor_id == tutor.tutor_id && !s.is_booked
+    );
+    const availabilityScore = tutorSlots.length > 0 ? 2 : 0;
+
+    const totalScore = skillScore + facultyScore + yearScore + availabilityScore;
+
+    return {
+      ...tutor,
+      matchScore: totalScore,
+      skillMatched,
+      availableSlots: tutorSlots
+    };
+  })
+  .filter(t => t.matchScore > 0)
+  .sort((a, b) => b.matchScore - a.matchScore);
+
+  res.json({
+    student,
+    recommendations: suggestions
+  });
 };

@@ -15,14 +15,13 @@ const tutors = [
 ];
 
 const students = [
-  { student_id: 3, name: 'John', email: 'john@example.com' }
+  { student_id: 3, name: 'John', email: 'john@example.com', listNeeds: ["Math", "Programming"],
+    faculty: "Computer Science", yearOfStudy: 2}
 ];
 
-// Đường dẫn file JSON
 const availabilityFile = path.join(__dirname, 'availabilities.json');
 const bookingFile = path.join(__dirname, 'bookings.json');
 
-// Hàm đọc JSON
 function readJSON(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));

@@ -1,5 +1,5 @@
 class Tutor {
-  constructor({ tutor_id, name, email }) {
+  constructor({ tutor_id, name, email, listExpertise = [] }) {
     this.tutor_id = tutor_id;
     this.name = name;
     this.email = email;
