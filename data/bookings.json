@@ -22,5 +22,11 @@
     "student_id": 3,
     "tutor_id": 2,
     "slot_id": 6
+  },
+  {
+    "booking_id": 5,
+    "student_id": 3,
+    "tutor_id": 2,
+    "slot_id": 5
   }
 ]

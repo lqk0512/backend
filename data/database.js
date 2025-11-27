@@ -10,8 +10,8 @@ const users = [
 ];
 
 const tutors = [
-  { tutor_id: 2, name: 'Alice', email: 'alice@example.com', listExpertise: ['Math', 'Physics'] },
-  { tutor_id: 4, name: 'Bob', email: 'bob@example.com', listExpertise: ['Chemistry', 'Biology'] }
+  { tutor_id: 2, name: 'Alice', email: 'alice@example.com', listExpertise: ['Math', 'Programming'] },
+  { tutor_id: 4, name: 'Bob', email: 'bob@example.com', listExpertise: ['Chemistry', 'Programming'] }
 ];
 
 const students = [

@@ -8,4 +8,6 @@ router.get('/:tutor_id/slots', authenticateToken, tutorController.getTutorSlots)
 router.post('/create', authenticateToken, authorizeRoles('admin','tutor'), tutorController.createSlot);
 router.get('/my-slots', authenticateToken, authorizeRoles('tutor'), tutorController.getMySlots);
 router.get('/subject/:subject', authenticateToken,authorizeRoles('student'), tutorController.getTutorsByExpertise);
+router.delete('/slot/:slot_id', authenticateToken, authorizeRoles('tutor'), tutorController.deleteSlot);
+router.put('/slot/:slot_id', authenticateToken, authorizeRoles('tutor'), tutorController.updateSlot);
 module.exports = router;

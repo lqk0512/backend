@@ -33,8 +33,7 @@ exports.createSlot = (req, res) => {
 };
 
 exports.getMySlots = (req, res) => {
-  const tutor_id = req.user.id; // lấy tutor id từ token
-
+  const tutor_id = req.user.id; 
   const availabilities = JSON.parse(fs.readFileSync(availabilityFile, 'utf8'));
 
   const mySlots = availabilities
@@ -73,4 +72,61 @@ exports.getTutorsByExpertise = (req, res) => {
   });
 
   res.json(result);
+};
+
+exports.deleteSlot = (req, res) => {
+  const tutor_id = req.user.id; 
+  const slot_id = parseInt(req.params.slot_id);
+
+  let availabilities = JSON.parse(fs.readFileSync(availabilityFile, 'utf8'));
+
+  const index = availabilities.findIndex(s => s.slot_id === slot_id);
+
+  if (index === -1) {
+    return res.status(404).json({ message: "Slot không tồn tại" });
+  }
+
+  const slot = availabilities[index];
+
+  if (parseInt(slot.tutor_id) !== tutor_id) {
+    return res.status(403).json({ message: "Bạn không thể xoá slot của tutor khác" });
+  }
+
+  if (slot.is_booked) {
+    return res.status(400).json({ message: "Slot đã được book, không thể xoá" });
+  }
+
+  availabilities.splice(index, 1);
+  writeJSON(availabilityFile, availabilities);
+
+  res.json({ message: "Xoá slot thành công", deleted_slot: slot });
+};
+
+exports.updateSlot = (req, res) => {
+  const tutor_id = req.user.id;
+  const slot_id = parseInt(req.params.slot_id);
+  const { start_time, end_time } = req.body;
+
+  let availabilities = JSON.parse(fs.readFileSync(availabilityFile, 'utf8'));
+
+  const slot = availabilities.find(s => s.slot_id === slot_id);
+
+  if (!slot) {
+    return res.status(404).json({ message: "Slot không tồn tại" });
+  }
+
+  if (parseInt(slot.tutor_id) !== tutor_id) {
+    return res.status(403).json({ message: "Không thể cập nhật slot của tutor khác" });
+  }
+
+  if (slot.is_booked) {
+    return res.status(400).json({ message: "Slot đã được book, không thể chỉnh sửa" });
+  }
+
+  if (start_time) slot.start_time = start_time;
+  if (end_time) slot.end_time = end_time;
+
+  writeJSON(availabilityFile, availabilities);
+
+  res.json({ message: "Cập nhật slot thành công", slot });
 };

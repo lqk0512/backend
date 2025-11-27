@@ -30,9 +30,9 @@
   {
     "slot_id": 5,
     "tutor_id": 2,
-    "start_time": "2025-11-26T10:00:08Z",
-    "end_time": "2025-11-26T11:00:08Z",
-    "is_booked": false
+    "start_time": "2025-01-01T10:00",
+    "end_time": "2025-01-01T11:00",
+    "is_booked": true
   },
   {
     "slot_id": 6,
@@ -40,5 +40,12 @@
     "start_time": "2025-11-26T10:00:10Z",
     "end_time": "2025-11-26T11:00:10Z",
     "is_booked": true
+  },
+  {
+    "slot_id": 7,
+    "tutor_id": 2,
+    "start_time": "2025-11-28T10:00:23Z",
+    "end_time": "2025-11-28T11:00:23Z",
+    "is_booked": false
   }
 ]
