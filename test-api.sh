@@ -21,6 +21,14 @@ curl -s -X GET $API_URL/tutors/my-slots \
   -H "Authorization: Bearer $TUTOR_TOKEN" \
   -H "Content-Type: application/json" | jq
 
+# -----------------------------
+# Tutor: view all my bookings
+# -----------------------------
+echo "--- Tutor: My Bookings ---"
+curl -s -X GET $API_URL/tutors/bookings/2 \
+  -H "Authorization: Bearer $TUTOR_TOKEN" \
+  -H "Content-Type: application/json" | jq
+
 # --- Create new slot ---
 echo "--- Creating new slot ---"
 

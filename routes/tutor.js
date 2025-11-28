@@ -10,4 +10,5 @@ router.get('/my-slots', authenticateToken, authorizeRoles('tutor'), tutorControl
 router.get('/subject/:subject', authenticateToken,authorizeRoles('student'), tutorController.getTutorsByExpertise);
 router.delete('/slot/:slot_id', authenticateToken, authorizeRoles('tutor'), tutorController.deleteSlot);
 router.put('/slot/:slot_id', authenticateToken, authorizeRoles('tutor'), tutorController.updateSlot);
+router.get('/bookings/:tutor_id', authenticateToken, authorizeRoles('tutor'), tutorController.getTutorBookings);
 module.exports = router;

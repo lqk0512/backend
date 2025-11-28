@@ -130,3 +130,19 @@ exports.updateSlot = (req, res) => {
 
   res.json({ message: "Cập nhật slot thành công", slot });
 };
+
+exports.getTutorBookings = (req, res) => {
+  const tutor_id = parseInt(req.params.tutor_id);
+  if (isNaN(tutor_id)) {
+    return res.status(400).json({ error: "Invalid tutor ID" });
+  }
+
+  // Đọc file trực tiếp để luôn cập nhật dữ liệu mới
+  const availabilities = JSON.parse(fs.readFileSync(availabilityFile, 'utf8'));
+
+  const slots = availabilities
+    .filter(s => parseInt(s.tutor_id) === tutor_id && s.is_booked === true)
+    .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
+
+  res.json(slots);
+};
