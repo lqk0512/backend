@@ -5,8 +5,8 @@ USERNAME="john"
 PASSWORD="john123"
 STUDENT_ID=3          # userId của student
 API_URL="http://localhost:3000"
-BOOKING1_ID=5  
-BOOKING2_ID=2
+BOOKING1_ID=2  
+BOOKING2_ID=1
 
 # ======= Login =======
 TOKEN=$(curl -s -X POST $API_URL/auth/login \
